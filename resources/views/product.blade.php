@@ -33,8 +33,16 @@
     <p class="text-gray-600 text-left">
       {{ $product->description }}
     </p>
-    <button class="rounded-sm bg-orange-500 hover:bg-orange-400 font-semibold
-      text-white mt-16 px-6 py-2">Add to Cart</button>
+    <form action="{{ route('cart.store') }}" method="POST">
+      {{ csrf_field() }}
+      <input type="hidden" name="id" value="{{ $product->id }}">
+      <input type="hidden" name="name" value="{{ $product->name }}">
+      <input type="hidden" name="price" value="{{ $product->price }}">
+      <button class="rounded-sm bg-orange-500 hover:bg-orange-400 font-semibold
+        text-white mt-16 px-6 py-2" type="submit">
+          Add to Cart
+      </button>
+    </form>
   </div>
 </div>
 

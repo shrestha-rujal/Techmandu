@@ -11433,6 +11433,17 @@ body {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+.notification {
+  display: inline-block;
+  padding: 0.5rem 4rem;
+  margin: 2px 0;
+  border-radius: 0.25rem;
+  color: white;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+}
+
 @media (min-width: 640px){
   .sm\:sr-only{
     position: absolute;

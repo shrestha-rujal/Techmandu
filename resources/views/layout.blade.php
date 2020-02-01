@@ -24,10 +24,12 @@
               class="cursor-pointer hover:bg-teal-500 px-6 py-2 rounded-sm flex
                 items-center">
               Cart
+              @if( Cart::count() > 0)
               <span class="bg-orange-500 text-black font-bold rounded-full w-4 h-4 inline-block
                 flex items-center justify-center text-xs ml-1">
-                4
+                {{ Cart::instance('default')->count() }}
               </span>
+              @endif
             </a>
             <a class="cursor-pointer hover:bg-teal-500 px-6 py-2 rounded-sm"
             >About</a>
