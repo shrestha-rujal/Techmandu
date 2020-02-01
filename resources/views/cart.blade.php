@@ -33,9 +33,9 @@
   @endif
   <!-- NOTIFICATIONS ending-->
   <div class="w-3/4">
-    @if( Cart::count() > 0)
     <div class="font-bold text-xl p-4">{{ Cart::count() }} item(s) in cart</div>
-    <div>
+    @if( Cart::count() > 0)
+    <div class="border border-gray-400 rounded-sm p-3">
       <!-- PRODUCT -->
       @foreach( Cart::content() as $item)
       <div class="flex items-center justify-around h-24 bg-gray-100 py-2 my-1">
@@ -83,17 +83,7 @@
       <!-- PRODUCT ending -->
     </div>
 
-    <!-- CODE INPUT -->
-    <div class="py-10">
-      <div class="text-lg font-semibold my-2">Have a Code?</div>
-      <div class="flex border rounded-sm h-10 w-1/2">
-        <input class="flex-1 px-3" type="text" name="codeInput">
-        <button class="bg-gray-500 text-white font-bold px-4 hover:bg-gray-600">Apply</button>
-      </div>
-    </div>
-    <!-- CODE INPUT ending-->
-
-    <div class="bg-gray-100 h-32 flex items-center my-6">
+    <div class="bg-gray-100 h-32 flex items-center my-10  ">
       <div class="flex-1 text-center">Delivery free above $100!</div>
       <table class="w-1/3">
         <tr>
@@ -114,7 +104,19 @@
     <div class="flex justify-between w-full">
       <a href="{{ route('shop.index') }}"
         class="button-outline hover:bg-gray-200">Continue Shopping</a>
-      <button class="button-outline bg-teal-400 hover:bg-teal-500 font-bold text-white">Proceed to Checkout</button>
+
+      <div class="flex items-center">
+        <!-- CODE INPUT -->
+        <div class="flex border h-12 mr-3 rounded-sm overflow-hidden">
+          <input class="flex-1 px-3" type="text" name="codeInput" placeholder="Enter discount code">
+          <button class="bg-gray-500 text-white font-bold px-4 hover:bg-gray-600">Apply</button>
+        </div>
+        <!-- CODE INPUT ending-->
+        <a href="{{ route('checkout.index') }}"
+          class="button-outline bg-teal-400 hover:bg-teal-500 font-bold text-white">
+          Proceed to Checkout
+        </a>
+      </div>
     </div>
     @else
     <div  class="notification bg-gray-600">No items in cart!</div>
@@ -123,10 +125,10 @@
     </a>
     @endif
     <!-- SAVED PRODUCTS -->
-    <div class="mt-32">
+    <div class="mt-16">
       @if( Cart::instance('savedForLater')->count() > 0)
       <div class="font-bold text-xl p-4">{{ Cart::instance('savedForLater')->count() }} Item(s) Saved For Later</div>
-      <div>
+      <div class="border border-gray-400 rounded-sm p-3">
         <!-- PRODUCT -->
         @foreach( Cart::instance('savedForLater')->content() as $item )
         <div class="flex items-center justify-around h-24 bg-gray-100 py-2 my-1">

@@ -11405,6 +11405,15 @@ body {
   font-family: "Nunito Sans", sans-serif;
 }
 
+.input-field {
+  border: 1px solid #bebebe;
+  width: 100%;
+  padding: 0.6rem;
+  margin: 5px;
+  border-radius: 3px;
+  font-size: 0.875rem;
+}
+
 .height-40 {
   height: 40rem;
 }
@@ -11419,7 +11428,7 @@ body {
 
 .button-outline {
   border: 1px solid;
-  padding: 10px 20px;
+  padding: 11px 20px;
   border-radius: 2px;
   cursor: pointer;
   margin: 5px;

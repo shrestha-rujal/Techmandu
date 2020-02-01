@@ -8,7 +8,7 @@
       <box-icon color="#ffffff" class="mx-2" name='chevron-right'></box-icon>
       <a href="{{ route('shop.index') }}">Products</a>
       <box-icon color="#ffffff" class="mx-2" name='chevron-right'></box-icon>
-      <a>product 1</a>
+      <a> item {{ $product->id }}</a>
     </div>
   </div>
 </div>

@@ -24,7 +24,7 @@
               class="cursor-pointer hover:bg-teal-500 px-6 py-2 rounded-sm flex
                 items-center">
               Cart
-              @if( Cart::count() > 0)
+              @if( Cart::instance('default')->count() > 0)
               <span class="bg-orange-500 text-black font-bold rounded-full w-4 h-4 inline-block
                 flex items-center justify-center text-xs ml-1">
                 {{ Cart::instance('default')->count() }}
@@ -43,10 +43,25 @@
       @yield('content')
 
       <!-- Footer -->
-      <div class="bg-gray-500 h-64 flex justify-center">
+      <div class="bg-gray-600 h-64 flex justify-center">
         <div class="w-3/4 flex text-white">
-          <div class="flex-1 p-12">Footer</div>
-          <div class="flex-1 p-12">Social copyright</div>
+          <div class="flex-1 p-12">
+            <div class="text-3xl font-bold my-5">Follow us on</div>
+            <div class="flex items-center w-1/3 justify-around">
+              <div><box-icon color="white" size="md" type='logo' name='twitter'></box-icon></div>
+              <div><box-icon color="white" size="md" name='facebook-circle' type='logo' ></box-icon></div>
+              <div><box-icon color="white" size="md" name='linkedin-square' type='logo' ></box-icon></div>
+            </div>
+          </div>
+          <div class="flex-1 p-12 flex justify-center">
+            <div>
+              <div class="font-bold text-xl my-2">Site Information</div>
+              <div>Accessibility</div>
+              <div>Terms and conditions</div>
+              <div>Privacy notices</div>
+              <div>Cookie policy</div>
+            </div>
+          </div>
         </div>
       </div>
       <!-- Footer ending -->
