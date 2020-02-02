@@ -7,6 +7,7 @@
     <title>Beautipur</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('extra-css')
   </head>
   <body>
     <div>
@@ -67,5 +68,6 @@
       <!-- Footer ending -->
     </div>
     <script type="text/javascript" src="/js/app.js"></script>
+    @yield('extra-js')
   </body>
 </html>

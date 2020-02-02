@@ -25,6 +25,10 @@ body {
   height: 15rem;
 }
 
+.height-10 {
+  height: 10rem;
+}
+
 .button-outline {
   border: 1px solid;
   padding: 11px 20px;
@@ -37,7 +41,11 @@ body {
   background-image: url('https://images.unsplash.com/photo-1559762691-617a33825bc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjExMDk0fQ&auto=format&fit=crop&w=1350&q=80');
 }
 
-.header-opacity-slight {
+.plain-background {
+  background-image: url('https://images.unsplash.com/photo-1472289065668-ce650ac443d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+}
+
+.opacity-slight {
   background-color: rgba(0,0,0,0.3)
 }
 
@@ -50,4 +58,28 @@ body {
   font-size: 1em;
   font-weight: bold;
   text-align: center;
+}
+
+.StripeElement {
+  border: 1px solid rgb(190, 190, 190);
+  width: 100%;
+  padding: 0.6rem;
+  margin: 5px;
+  border-radius: 3px;
+  font-size: 0.875rem;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+
+#card-errors {
+  color: #fa755a;
 }

@@ -1,8 +1,13 @@
 @extends('layout')
+
+@section('extra-css')
+<script src="https://js.stripe.com/v3"></script>
+@endsection
+
 @section('content')
 <!-- Header -->
 <div class="height-15 header-background bg-cover bg-center">
-  <div class="h-full flex w-full header-opacity-slight items-end pl-48">
+  <div class="h-full flex w-full opacity-slight items-end pl-48">
     <div class="mb-16 p-1 text-white font-semibold text-xl flex items-center text-2xl">
       <a href="{{ route('home') }}">Home</a>
       <box-icon color="#ffffff" class="mx-2" name='chevron-right'></box-icon>
@@ -13,38 +18,62 @@
   </div>
 </div>
 <!-- Header Ending-->
+
+@if(session()->has('SUCCESS_MESSAGE'))
+<div class="flex justify-center mt-3">
+  <div class="notification bg-green-500 w-3/4">
+    {{ session()->get('SUCCESS_MESSAGE') }}
+  </div>
+</div>
+@endif
+
+@if(session()->has('ERROR_MESSAGE'))
+<div class="flex justify-center mt-3">
+  <div class="notification bg-red-500 w-3/4">
+    {{ session()->get('ERROR_MESSAGE') }}
+  </div>
+</div>
+@endif
+
+@if(count($errors) > 0)
+<div class="flex flex-col items-center mt-3">
+  @foreach ($errors->all() as $error)
+  <div class="notification bg-red-500 w-3/4">
+    {!! $error !!}
+  </div>
+  @endforeach
+</div>
+@endif
+
 <div class="flex container mx-auto py-16">
-  <form class="flex-1">
+<form class="flex-1"  id="payment-form" method="POST" action="{{ route('checkout.store') }}">
+  {{ csrf_field() }}
     <div>
       <div class="my-4 font-semibold text-lg">Billing Details</div>
       <div class="flex">
-        <input type="text" placeholder="Email Address" class="input-field">
-        <input type="text" placeholder="Name" class="input-field">
+        <input type="email" placeholder="Email Address" name="email" value="{{ old('email') }}" class="input-field" required>
+        <input type="text" placeholder="Name" name="name" value="{{ old('name') }}" class="input-field" required>
       </div>
       <div class="flex">
-        <input type="text" placeholder="Address" class="input-field">
-        <input type="text" placeholder="City" class="input-field">
+        <input type="text" placeholder="Address" id="address" name="address" value="{{ old('address') }}" class="input-field" required>
+        <input type="text" placeholder="City" id="city" name="city" value="{{ old('city') }}" class="input-field" required>
       </div>
       <div class="flex">
-        <input type="text" placeholder="Province" class="input-field">
-        <input type="text" placeholder="Postal code" class="input-field">
-        <input type="text" placeholder="Phone" class="input-field">
+        <input type="text" placeholder="Province" name="province" id="state" value="{{ old('province') }}" class="input-field" required>
+        <input type="text" placeholder="Postal code" id="postalCode" name="postalCode" value="{{ old('postalCode') }}" class="input-field" required>
+        <input type="text" placeholder="Phone" name="phone" value="{{ old('phone') }}" class="input-field" required>
       </div>
     </div>
     <div class="my-10">
       <div class="my-4 font-semibold text-lg">Payment Details</div>
-      <div class="flex">
-        <input type="text" placeholder="Credit Card Number" class="input-field">
-        <input type="text" placeholder="Name on Card" class="input-field">
+      <input type="text" placeholder="Name on Card" id="name_on_card" name="name_on_card"
+        value="{{ old('name_on_card') }}" class="input-field" required>
+      <div id="card-element">
       </div>
-      <div class="flex">
-        <input type="text" placeholder="Address" class="input-field">
-        <input type="text" placeholder="Expiry" class="input-field">
-        <input type="text" placeholder="CVC Code" class="input-field">
-      </div>
+      <div id="card-errors" role="alert"></div>
     </div>
-    <button type="submit" class="bg-green-500 text-white hover:bg-green-400 w-full font-bold
-      py-2 rounded">
+    <button type="submit" id="complete-order"
+      class="bg-green-500 text-white hover:bg-green-400 w-full font-bold py-2 rounded">
       Complete Order
     </button>
   </form>
@@ -88,5 +117,93 @@
     </div>
   </div>
 </div>
+@endsection
 
+@section('extra-js')
+<script>
+  (function() {
+    // Create a Stripe client.
+    var stripe = Stripe('pk_test_e0nuQ60Y39XDAWiIC2khmrnp005MRcJwCZ');
+
+    // Create an instance of Elements.
+    var elements = stripe.elements();
+
+    // Custom styling can be passed to options when creating an Element.
+    // (Note that this demo uses a wider set of styles than the guide below.)
+    var style = {
+      base: {
+        color: '#32325d',
+        fontSmoothing: 'antialiased',
+        '::placeholder': {
+          color: '#aab7c4'
+        }
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a'
+      }
+    };
+
+    // Create an instance of the card Element.
+    var card = elements.create('card', {
+      style: style,
+      hidePostalCode: true,
+    });
+
+    // Add an instance of the card Element into the `card-element` <div>.
+    card.mount('#card-element');
+
+    // Handle real-time validation errors from the card Element.
+    card.addEventListener('change', function(event) {
+      var displayError = document.getElementById('card-errors');
+      if (event.error) {
+        displayError.textContent = event.error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
+
+    // Handle form submission.
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      document.getElementById('complete-order').disabled = true;
+
+      var options = {
+        name: document.getElementById('name_on_card').value,
+        address_line1: document.getElementById('address').value,
+        address_city: document.getElementById('city').value,
+        address_state: document.getElementById('state').value,
+        address_zip: document.getElementById('postalCode').value
+      };
+
+      stripe.createToken(card, options).then(function(result) {
+        if (result.error) {
+          // Inform the user if there was an error.
+          var errorElement = document.getElementById('card-errors');
+          errorElement.textContent = result.error.message;
+          document.getElementById('complete-order').disabled=true;
+        } else {
+          // Send the token to your server.
+          stripeTokenHandler(result.token);
+        }
+      });
+    });
+
+    // Submit the form with the token ID.
+    function stripeTokenHandler(token) {
+      // Insert the token ID into the form so it gets submitted to the server
+      var form = document.getElementById('payment-form');
+      var hiddenInput = document.createElement('input');
+      hiddenInput.setAttribute('type', 'hidden');
+      hiddenInput.setAttribute('name', 'stripeToken');
+      hiddenInput.setAttribute('value', token.id);
+      form.appendChild(hiddenInput);
+
+      // Submit the form
+      form.submit();
+    }
+  })();
+</script>
 @endsection

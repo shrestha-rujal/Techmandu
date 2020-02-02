@@ -2,7 +2,7 @@
 @section('content')
 <!-- Header -->
 <div class="height-40 header-background">
-  <div class="h-full flex justify-center w-full header-opacity-slight">
+  <div class="h-full flex justify-center w-full opacity-slight">
     <div class="w-3/4 h-full flex mt-12">
       <div class="flex-1 flex flex-col items-start justify-center text-white p-10">
         <div class="text-5xl font-bold py-3">Tech Portal</div>

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CheckoutRequest;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Cartalyst\Stripe\Laravel\Facades\Stripe;
+use Cartalyst\Stripe\Exception\CardErrorException;
 
 class CheckoutController extends Controller
 {
@@ -32,9 +36,32 @@ class CheckoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CheckoutRequest $request)
     {
-        //
+      $contents = Cart::content()->map(function($item) {
+        return $item->model->slug.', '.$item->qty;
+      })->values()->tojson();
+
+      try {
+        $charge = Stripe::charges()->create([
+          'amount' => Cart::total() / 100,
+          'currency' => 'USD',
+          'source' => $request->stripeToken,
+          'description' => 'Order',
+          'receipt_email' => $request->email,
+          'metadata' => [
+              'contents' => $contents,
+              'quantity' => Cart::instance('default')->count(),
+              // 'discount' => collect(session()->get('coupon'))->toJson(),
+          ],
+        ]);
+
+        Cart::instance('default')->destroy();
+        return redirect()->route('confirmation.index');
+
+      } catch(CardErrorException $e) {
+        return back()->with('ERROR_MESSAGE', $e->getMessage());
+      }
     }
 
     /**

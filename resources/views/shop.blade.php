@@ -2,7 +2,7 @@
 @section('content')
 <!-- Header -->
 <div class="height-15 header-background bg-cover bg-center">
-  <div class="h-full flex w-full header-opacity-slight items-end pl-48">
+  <div class="h-full flex w-full opacity-slight items-end pl-48">
     <div class="mb-16 p-1 text-white font-semibold text-xl flex items-center text-2xl">
       <a href="{{ route('home') }}">Home</a>
       <box-icon color="#ffffff" class="mx-2" name='chevron-right'></box-icon>

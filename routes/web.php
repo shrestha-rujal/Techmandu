@@ -24,6 +24,9 @@ Route::post('/cart/switch-to-cart/{product}', 'CartController@switchToCart')->na
 Route::delete('/save-for-later/{product}', 'CartController@destroySavedForLater')->name('cart.destroySavedForLater');
 
 Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
+Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
+
+Route::get('/confirmation', 'ConfirmationController@index')->name('confirmation.index');
 
 Route::get('empty', function() {
   Cart::destroy();
