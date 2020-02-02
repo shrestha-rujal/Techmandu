@@ -15,14 +15,14 @@
       <div class="absolute w-full">
         <div class="flex justify-between px-32 py-10 text-white items-center">
           <a href="{{ route('home') }}" class="text-2xl font-bold">
-            <span class="bg-teal-400 rounded-sm p-1">Tech</span>mandu
+            <span class="bg-purple-700 rounded-sm py-2 pr-1 pl-5 rounded-l-full">Tech</span>mandu
           </a>
           <div class="flex">
             <a href="{{ route('shop.index') }}"
-              class="cursor-pointer hover:bg-teal-500 px-6 py-2 rounded-sm"
+              class="cursor-pointer hover:bg-teal-500 rounded-full px-6 py-2"
             >Shop</a>
             <a href=" {{ route('cart.index')  }}"
-              class="cursor-pointer hover:bg-teal-500 px-6 py-2 rounded-sm flex
+              class="cursor-pointer hover:bg-teal-500 rounded-full px-6 py-2 flex
                 items-center">
               Cart
               @if( Cart::instance('default')->count() > 0)
@@ -32,9 +32,9 @@
               </span>
               @endif
             </a>
-            <a class="cursor-pointer hover:bg-teal-500 px-6 py-2 rounded-sm"
+            <a class="cursor-pointer hover:bg-teal-500 px-6 py-2 rounded-full"
             >About</a>
-            <a class="cursor-pointer hover:bg-teal-500 px-6 py-2 rounded-sm"
+            <a class="cursor-pointer hover:bg-teal-500 px-6 py-2 rounded-full"
             >Blog</a>
           </div>
         </div>

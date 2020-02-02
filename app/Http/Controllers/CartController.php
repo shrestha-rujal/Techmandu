@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
 use Cart;
+use App\Product;
+use Validator;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -128,7 +129,18 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $validator = Validator::make($request->all(), [
+        'quantity' => 'required|numeric|between:1,50'
+      ]);
+
+      if($validator->fails()) {
+        session()->flash('errors', collect(['Invalid Item Quantity']));
+        return response()->json(['success' => false ]);
+      }
+
+      Cart::update($id, $request->quantity);
+      session()->flash('SUCCESS_MESSAGE', 'Quantity updated successfully!');
+      return response()->json(['success' => true]);
     }
 
     /**
@@ -153,5 +165,16 @@ class CartController extends Controller
     {
         Cart::instance('savedForLater')->remove($id);
         return back()->with('SUCCESS_MESSAGE', 'Item removed from saved for later!');
+    }
+
+       /**
+     * Remove the all resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyAll()
+    {
+        Cart::instance('default')->destroy();
+        return back()->with('SUCCESS_MESSAGE', 'Cart Emptied!');
     }
 }

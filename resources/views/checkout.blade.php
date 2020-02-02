@@ -94,7 +94,9 @@
           <div class="text-xs text-gray-600">{{ $item->model->details }}</div>
           <div class="text-xs text-gray-900">{{ presentPrice($item->model->price) }}</div>
         </div>
-        <div class="py-1 px-3 border border-gray-500 rounded-sm">1</div>
+        <div class="py-1 px-3 border border-gray-500 rounded-sm">
+          {{ $item->qty }}
+        </div>
       </div>
       @endforeach
       <!-- PRODUCT ending -->

@@ -24,7 +24,7 @@
 
   @if( count($errors) > 0 )
   <div class="flex flex-col items-center mt-3">
-    @foreach( $errors->all as $error )
+    @foreach( $errors->all() as $error )
     <div class="notification bg-red-400">
       {{ $error }}
     </div>
@@ -33,7 +33,19 @@
   @endif
   <!-- NOTIFICATIONS ending-->
   <div class="w-3/4">
-    <div class="font-bold text-xl p-4">{{ Cart::count() }} item(s) in cart</div>
+    <div class="flex items-center">
+      <div class="font-bold text-xl p-4">{{ Cart::count() }} item(s) in cart</div>
+      @if(Cart::count()>0)
+      <form action="{{ route('cart.destroyAll') }}" method="POST">
+        {{ csrf_field() }}
+        {{ method_field('DELETE') }}
+        <button type="submit" class="bg-red-400 text-white font-bold text-xs hover:bg-red-300
+          px-3 py-1 rounded-sm">
+          Clear items
+        </button>
+      </form>
+      @endif
+    </div>
     @if( Cart::count() > 0)
     <div class="border border-gray-400 rounded-sm p-3">
       <!-- PRODUCT -->
@@ -65,18 +77,9 @@
               hover:bg-gray-200 rounded uppercase">Save for later</button>
             </form>
           </div>
-          <div class="flex border rounded-sm items-center mx-8">
-            <div class="px-3 h-full">1</div>
-            <div class="flex flex-col justify-center items-center bg-teal-400 border border-teal-400">
-              <button class="h-5 w-5 hover:bg-teal-500">
-                <box-icon size="xs" color="white" name='chevron-up'></box-icon>
-              </button>
-              <button class="h-5 w-5 hover:bg-teal-500">
-                <box-icon size="xs" color="white" name='chevron-down' ></box-icon>
-              </button>
-            </div>
-          </div>
-          <div class="text-lg font-bold">{{ $item->model->presentPrice() }}</div>
+          <input type="number" value="{{ $item->qty }}"  data-id="{{ $item->rowId }}"
+            class="w-16 p-1 border mx-8 quantity text-center" min="1">
+          <div class="text-lg font-bold">{{ presentPrice($item->subtotal) }}</div>
         </div>
       </div>
       @endforeach
@@ -174,4 +177,18 @@
   </div>
 </div>
 @include('recommended')
+@endsection
+
+@section('extra-js')
+<script src="{{ asset('js/app.js') }}"></script>
+<script>
+  Array.from(document.querySelectorAll('.quantity')).forEach((input) => {
+    input.addEventListener('change', (e) => {
+      const itemId = input.getAttribute('data-id');
+      axios.patch(`/cart/${itemId}`, { quantity: e.target.value })
+        .then( () => window.location.href="{{ route('cart.index') }}" )
+        .catch( error => console.error(error));
+    })
+  })
+</script>
 @endsection
