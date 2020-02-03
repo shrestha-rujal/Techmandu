@@ -19,10 +19,10 @@
           </a>
           <div class="flex">
             <a href="{{ route('shop.index') }}"
-              class="cursor-pointer hover:bg-teal-500 rounded-full px-6 py-2"
+              class="cursor-pointer hover:bg-teal-500 rounded-full px-4 py-1 mx-1"
             >Shop</a>
             <a href=" {{ route('cart.index')  }}"
-              class="cursor-pointer hover:bg-teal-500 rounded-full px-6 py-2 flex
+              class="cursor-pointer hover:bg-teal-500 rounded-full px-4 py-1 mx-1 flex
                 items-center">
               Cart
               @if( Cart::instance('default')->count() > 0)
@@ -32,9 +32,9 @@
               </span>
               @endif
             </a>
-            <a class="cursor-pointer hover:bg-teal-500 px-6 py-2 rounded-full"
+            <a class="cursor-pointer hover:bg-teal-500 px-4 py-1 mx-1 rounded-full"
             >About</a>
-            <a class="cursor-pointer hover:bg-teal-500 px-6 py-2 rounded-full"
+            <a class="cursor-pointer hover:bg-teal-500 px-4 py-1 mx-1 rounded-full"
             >Blog</a>
           </div>
         </div>

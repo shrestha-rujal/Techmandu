@@ -17,7 +17,7 @@
 <div class="flex container mx-auto py-20">
   <div class="flex-1 flex items-center justify-center">
     <div class="w-3/4 h-auto border p-8">
-      <img src="{{ asset('images/product.png') }}" alt="">
+      <img src="{{ asset('images/'.$product->slug.'.png') }}" alt="">
     </div>
   </div>
   <div class="flex-1 p-10 text-center">

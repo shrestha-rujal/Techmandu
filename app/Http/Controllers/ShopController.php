@@ -4,19 +4,35 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Category;
 
 class ShopController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $products = Product::take(12)->get();
-        return view('shop')->with('products', $products);
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function index()
+  {
+    if(request()->category){
+      $products = Product::with('categories')->whereHas('categories', function($query) {
+        $query->where('slug', request()->category);
+      })->inRandomOrder()->take(12)->get();
+      $categories = Category::all();
+      $categoryHeading = $categories->where('slug', request()->category)->first()->name;
+    } else {
+      $products = Product::inRandomOrder()->take(12)->get();
+      $categories = Category::all();
+      $categoryHeading = 'Featured';
     }
+
+    return view('shop')->with([
+      'products' => $products,
+      'categories' => $categories,
+      'categoryHeading' => $categoryHeading,
+    ]);
+  }
 
     /**
      * Show the form for creating a new resource.

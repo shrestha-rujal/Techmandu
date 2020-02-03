@@ -15,13 +15,14 @@
 <div class="flex container mx-auto py-20">
   <div class="pr-20 flex flex-col border-r">
     <div class="font-semibold w-full my-4">By Category</div>
-    <ul class="pl-3 text-sm">
-      <li class="my-2">Laptops</li>
-      <li class="my-2">Desktops</li>
-      <li class="my-2">Mobile Phones</li>
-      <li class="my-2">Tablets</li>
-      <li class="my-2">Appliances</li>
-    </ul>
+    <div class="pl-3 text-sm">
+      @foreach($categories as $category)
+      <a href="{{ route('shop.index', ['category' => $category->slug]) }}"
+        class="my-2 block hover:underline">
+        {{ $category->name }}
+      </a>
+      @endforeach
+    </div>
     <hr class="my-4">
     <div class="font-semibold w-full my-4">By Price</div>
     <ul class="pl-3 text-sm">
@@ -32,24 +33,23 @@
   </div>
   <div class="flex-1">
     <div class="text-3xl px-10 ">
-      <span class="font-semibold border-b-2 border-teal-500">Laptops</span>
+      <span class="font-semibold border-b-2 border-teal-500">{{ $categoryHeading }}</span>
     </div>
+    @if(count($products) > 0)
     <div class="flex flex-wrap pl-16 py-16">
       @foreach ($products as $product)
         <a
-            class="m-4 p-4 rounded-sm cursor-pointer hover:bg-gray-200 flex flex-col
+            class="m-4 p-3 rounded-sm cursor-pointer hover:bg-gray-200 flex flex-col
                 items-center justify-center"
             href="{{ route('shop.show', $product->slug) }}"
         >
-            <div class="w-32 h-32 my-4 mx-8">
-                <img
-                    class=""
-                    src="{{ asset('images/product.png') }}"
-                    alt="product_image"
-                >
+            <div class="my-4 mx-8 overflow-hidden">
+                <img src="{{ asset('images/'.$product->slug.'.png') }}" alt="product_image"
+                  class="object-contain w-32 h-32">
             </div>
             <div class="flex flex-col items-center">
-                <div class="font-bold text-gray-700">{{ $product->name }}</div>
+                <div class="font-bold text-gray-700 tracking-wider">{{ $product->name }}</div>
+                <div class="text-xs tracking-tight text-gray-600">{{ $product->details }}</div>
                 <div
                     class="text-gray-600 text-sm"
                 >{{ $product->presentPrice() }}</div>
@@ -70,6 +70,12 @@
       </div>
     </div>
     <!-- PAGINATION ENDING-->
+    @else
+    <div class="w-full h-full flex justify-center items-center">
+        <box-icon name='search-alt' color="gray" class="w-16 h-16" size="cssSize"></box-icon>
+        <span class="ml-4 text-2xl font-semibold text-gray-600">No items in this category.</span>
+    </div>
+    @endif
   </div>
 </div>
 @endsection

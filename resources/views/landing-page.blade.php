@@ -40,10 +40,10 @@
       class="m-4 p-4 border rounded-sm cursor-pointer hover:bg-gray-200 flex flex-col
         items-center justify-center"
       href="{{ route('shop.show', $product->slug) }}">
-      <div class="w-32 h-32 my-4 mx-8">
+      <div class="my-4 mx-8">
         <img
-          class=""
-          src="{{ asset('images/product.png') }}"
+          class="object-contain w-32 h-32"
+          src="{{ asset('images/'.$product->slug.'.png') }}"
           alt="product_image"
         >
       </div>

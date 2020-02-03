@@ -83,9 +83,9 @@
       <!-- PRODUCT -->
       @foreach( Cart::content() as $item)
       <div class="flex items-center justify-around h-20 bg-gray-100 py-2 my-1">
-        <a class="w-16 h-full border rounded flex items-center justify-center p-1"
+        <a class="h-full border rounded flex items-center justify-center p-1"
           href="{{ route('shop.show', $item->model->slug) }}">
-          <img src="{{ asset('images/product.png') }}" class="w-full h-auto">
+          <img src="{{ asset('images/'.$item->model->slug.'.png') }}" class="object-contain w-16 h-full">
         </a>
         <div class="font-bold">
           <a href="{{ route('shop.show', $item->model->slug) }}">
