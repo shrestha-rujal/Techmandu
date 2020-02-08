@@ -11485,6 +11485,58 @@ body {
   color: #fa755a;
 }
 
+.pagination {
+  display: -webkit-box;
+  display: flex;
+  background: #f8f8f8;
+  height: 40px;
+  -webkit-box-align: center;
+          align-items: center;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.pagination > .active, .pagination > .active > a, .pagination > .active > li, .pagination > .active > span {
+  background: #d4d4d4;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.page-item {
+  height: 100%;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+
+.page-link {
+  height: 100%;
+  padding: 0 14px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  color: gray;
+  font-size: 0.9em;
+  -webkit-transition-duration: 200ms;
+          transition-duration: 200ms;
+}
+
+.page-link:hover {
+  background: #59dfdf;
+  color: white;
+  font-weight: bold;
+}
+
+.active {
+  color: teal;
+  font-weight: bolder;
+}
+
 @media (min-width: 640px){
   .sm\:sr-only{
     position: absolute;

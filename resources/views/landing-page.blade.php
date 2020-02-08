@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 <!-- Header -->
-<div class="height-40 header-background">
+<div class="height-40 header-background parallax">
   <div class="h-full flex justify-center w-full opacity-slight">
     <div class="w-3/4 h-full flex mt-12">
       <div class="flex-1 flex flex-col items-start justify-center text-white p-10">
@@ -34,7 +34,7 @@
       <div class="button-outline hover:bg-gray-400">On sale</div>
     </div>
   </div>
-  <div class="flex justify-center items-center flex-wrap w-full px-32 py-16">
+  <div class="flex justify-center items-center flex-wrap w-full px-48 py-16">
     @foreach ($products as $product)
     <a
       class="m-4 p-4 border rounded-sm cursor-pointer hover:bg-gray-200 flex flex-col

@@ -15,7 +15,7 @@
 </div>
 <!-- Header Ending-->
 <div class="flex items-center justify-center plain-background bg-cover bg-top">
-  <div class="h-full w-full opacity-slight">
+  <div class="h-full w-full opacity-slight-2">
     <div class="text-center py-64">
       <div class="text-5xl font-black text-white">Thank you for your order!</div>
       <div class="text-gray-200 text-lg font-semibold">A confirmation email was sent.</div>

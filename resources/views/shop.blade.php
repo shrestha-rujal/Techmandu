@@ -18,7 +18,7 @@
     <div class="pl-3 text-sm">
       @foreach($categories as $category)
       <a href="{{ route('shop.index', ['category' => $category->slug]) }}"
-        class="my-2 block hover:underline">
+        class="my-2 block hover:underline {{ isActiveCategory($category->slug) }}">
         {{ $category->name }}
       </a>
       @endforeach
@@ -32,8 +32,23 @@
     </ul>
   </div>
   <div class="flex-1">
-    <div class="text-3xl px-10 ">
-      <span class="font-semibold border-b-2 border-teal-500">{{ $categoryHeading }}</span>
+    <div class="px-10 flex justify-between items-center">
+      <span class="text-3xl text-gray-700 font-semibold border-b-2 border-teal-500">{{ $categoryHeading }}</span>
+      <div class="flex items-center text-gray-600">
+        <span class="font-bold">Sort by price: </span>
+        <a href="{{ route('shop.index', [ 'category'=>request()->category, 'sort'=>'price' ]) }}"
+          class="text-sm text-gray-500 ml-4 hover:text-gray-800 {{ checkSortOrder($sortOrder, 2) }}">
+          Low to High
+        </a>
+        <a href="{{ route('shop.index', [ 'category'=>request()->category, 'sort'=>'-price' ]) }}"
+          class="text-sm text-gray-500 ml-2 hover:text-gray-800 {{ checkSortOrder($sortOrder, 1) }}">
+          High to Low
+        </a>
+        {{-- <select class="mx-3 px-2 py-1 rounded bg-white border border-gray-400" id="price-sorting"">
+          <option value="price">Low to High</option>
+          <option value="-price">High to Low</option>
+        </select> --}}
+      </div>
     </div>
     @if(count($products) > 0)
     <div class="flex flex-wrap pl-16 py-16">
@@ -59,7 +74,7 @@
     </div>
     <!-- PAGINATION -->
     <div class="flex justify-center items-center h-10">
-      <div class="flex h-full rounded-lg bg-gray-200 shadow-md">
+      {{-- <div class="flex h-full rounded-lg bg-gray-200 shadow-md">
         <button class="h-full px-2 flex items-center rounded-l hover:bg-gray-300">
           <box-icon name='chevron-left' color="gray"></box-icon>
         </button>
@@ -67,7 +82,8 @@
         <button class="h-full px-2 flex items-center rounded-r hover:bg-gray-300">
           <box-icon name='chevron-right' color="gray"></box-icon>
         </button>
-      </div>
+      </div> --}}
+      <span class="">{{ $products->appends(request()->input())->links() }}</span>
     </div>
     <!-- PAGINATION ENDING-->
     @else
@@ -78,4 +94,14 @@
     @endif
   </div>
 </div>
+@endsection
+
+@section('extra-js')
+<script>
+  // const sortSelection = document.getElementById('price-sorting')
+  // sortSelection.addEventListener('change', function(e) {
+  //   const sortOrder = '-price';
+  //   window.location.href = `{{ route('shop.index', ['sort'=>'-price', 'category'=>'tablets']) }}`;
+  // });
+</script>
 @endsection

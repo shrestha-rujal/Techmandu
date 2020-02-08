@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Beautipur</title>
+    <title>Techmandu</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('extra-css')
@@ -19,11 +19,11 @@
           </a>
           <div class="flex">
             <a href="{{ route('shop.index') }}"
-              class="cursor-pointer hover:bg-teal-500 rounded-full px-4 py-1 mx-1"
+              class="cursor-pointer hover:bg-teal-500 rounded-full px-4 py-1 mx-1 duration-2"
             >Shop</a>
             <a href=" {{ route('cart.index')  }}"
               class="cursor-pointer hover:bg-teal-500 rounded-full px-4 py-1 mx-1 flex
-                items-center">
+                items-center duration-2">
               Cart
               @if( Cart::instance('default')->count() > 0)
               <span class="bg-orange-500 text-black font-bold rounded-full w-4 h-4 inline-block
@@ -32,9 +32,9 @@
               </span>
               @endif
             </a>
-            <a class="cursor-pointer hover:bg-teal-500 px-4 py-1 mx-1 rounded-full"
+            <a class="cursor-pointer hover:bg-teal-500 px-4 py-1 mx-1 rounded-full duration-2"
             >About</a>
-            <a class="cursor-pointer hover:bg-teal-500 px-4 py-1 mx-1 rounded-full"
+            <a class="cursor-pointer hover:bg-teal-500 px-4 py-1 mx-1 rounded-full duration-2"
             >Blog</a>
           </div>
         </div>
