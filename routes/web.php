@@ -33,3 +33,8 @@ Route::get('/confirmation', 'ConfirmationController@index')->name('confirmation.
 Route::get('empty', function() {
   Cart::destroy();
 });
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});

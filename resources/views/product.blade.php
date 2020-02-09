@@ -31,7 +31,7 @@
       </div>
     </div>
     <p class="text-gray-600 text-left">
-      {{ $product->description }}
+      {!! $product->description !!}
     </p>
     <form action="{{ route('cart.store') }}" method="POST">
       {{ csrf_field() }}
