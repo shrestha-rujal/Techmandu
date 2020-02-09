@@ -28,6 +28,9 @@ Route::delete('/save-for-later/{product}', 'CartController@destroySavedForLater'
 Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
 Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
 
+Route::post('checkout/discount_coupon', 'CouponController@store')->name('coupon.store');
+Route::delete('checkout/discount_coupon', 'CouponController@destroy')->name('coupon.destroy');
+
 Route::get('/confirmation', 'ConfirmationController@index')->name('confirmation.index');
 
 Route::get('empty', function() {

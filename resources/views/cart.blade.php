@@ -108,18 +108,10 @@
       <a href="{{ route('shop.index') }}"
         class="button-outline hover:bg-gray-200">Continue Shopping</a>
 
-      <div class="flex items-center">
-        <!-- CODE INPUT -->
-        <div class="flex border h-12 mr-3 rounded-sm overflow-hidden">
-          <input class="flex-1 px-3" type="text" name="codeInput" placeholder="Enter discount code">
-          <button class="bg-gray-500 text-white font-bold px-4 hover:bg-gray-600">Apply</button>
-        </div>
-        <!-- CODE INPUT ending-->
-        <a href="{{ route('checkout.index') }}"
-          class="button-outline bg-teal-400 hover:bg-teal-500 font-bold text-white">
-          Proceed to Checkout
-        </a>
-      </div>
+      <a href="{{ route('checkout.index') }}"
+        class="button-outline bg-teal-400 hover:bg-teal-500 font-bold text-white">
+        Proceed to Checkout
+      </a>
     </div>
     @else
     <div  class="notification bg-gray-600">No items in cart!</div>

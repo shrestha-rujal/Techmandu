@@ -102,21 +102,55 @@
       <!-- PRODUCT ending -->
     </div>
     <div class="w-full flex justify-center py-5 my-4 bg-gray-200">
-      <table class="w-2/3 rounded">
+      <table class="w-3/4 rounded">
         <tr>
           <td>Subtotal</td>
           <td>{{ presentPrice(Cart::subtotal()) }}</td>
         </tr>
+        @if(session()->has('coupon'))
+        <tr class="border-t border-gray-400">
+          <td class="py-1 flex items-center pt-2">
+            Discount
+            <form action="{{ route('coupon.destroy') }}" method="POST">
+              {{ csrf_field() }}
+              {{ method_field('delete') }}
+              <button type="submit" }}"
+                class="text-red-500 shadow-sm border border-red-300 px-2 ml-2 rounded-full text-xs
+                flex items-center hover:bg-red-200">
+                <span><box-icon name='x' color="red" size="xs"></box-icon></span>
+                <span class="ml-1">{{ session()->get('coupon')['name'] }}</span>
+              </button>
+            </form>
+          </td>
+          <td class="py-1">-{{ presentPrice($discount) }}</td>
+        </tr>
+        <tr class="border-b border-gray-400">
+          <td>Discounted subtotal</td>
+          <td>{{ presentPrice($newSubtotal) }}</td>
+        </tr>
+        @endif
         <tr>
           <td class="py-1">Tax (13%)</td>
-          <td class="py-1">{{ presentPrice(Cart::tax()) }}</td>
+          <td class="py-1">{{ presentPrice($newTax) }}</td>
         </tr>
         <tr class="font-bold text-black text-lg">
           <td>Total</td>
-          <td>{{ presentPrice(Cart::total()) }}</td>
+          <td>{{ presentPrice($newTotal) }}</td>
         </tr>
       </table>
     </div>
+    <!-- CODE INPUT -->
+    @if(!session()->has('coupon'))
+    <form class="m-6" action="{{ route('coupon.store') }}" method="POST">
+      {{ csrf_field() }}
+      <label for="codeInput" class="font-bold">Have a coupon?</label>
+      <div class="flex border h-12 rounded-sm overflow-hidden">
+        <input class="flex-1 px-3" type="text" id="codeInput" name="code" placeholder="Enter discount code">
+        <button class="bg-gray-500 text-white font-bold px-4 hover:bg-gray-600" type="submit">Apply</button>
+      </div>
+    </form>
+    @endif
+    <!-- CODE INPUT ending-->
   </div>
 </div>
 @endsection
