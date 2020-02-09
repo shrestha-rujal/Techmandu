@@ -25,7 +25,7 @@ class ShopController extends Controller
       });
       $categoryHeading = optional($categories->where('slug', request()->category)->first())->name;
     } else {
-      $products = Product::where('featured', true);
+      $products = Product::inRandomOrder()->take(12);
       $categoryHeading = 'Featured';
     }
 
